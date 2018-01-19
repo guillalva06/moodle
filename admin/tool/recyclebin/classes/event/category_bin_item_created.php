@@ -53,6 +53,10 @@ class category_bin_item_created extends \core\event\base {
         return get_string('eventitemcreated', 'tool_recyclebin');
     }
 
+    public static function get_objectid_mapping() {
+        return array('db' => 'tool_recyclebin_course', 'restore' => \core\event\base::NOT_MAPPED);
+    }
+
     /**
      * Returns description of what happened.
      *

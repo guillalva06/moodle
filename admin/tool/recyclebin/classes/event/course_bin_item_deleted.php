@@ -63,4 +63,9 @@ class course_bin_item_deleted extends \core\event\base {
             'objectid' => $this->objectid
         ));
     }
+
+    public static function get_objectid_mapping() {
+        return array('db' => 'tool_recyclebin_course', 'restore' => \core\event\base::NOT_MAPPED);
+    }
+
 }
