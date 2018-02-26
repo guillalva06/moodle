@@ -1271,4 +1271,51 @@ class mod_feedback_external extends external_api {
             )
         );
     }
+
+    /**
+     * Defines the input parameters of update_questions_order.
+     * @return \external_function_parameters
+     */
+    public static function update_questions_order_parameters() {
+        $parameters = [
+            'cmid' => new \external_value(PARAM_INT, 'Course module ID', VALUE_REQUIRED),
+            'itemorder' => new \external_value(PARAM_TEXT, 'Order of the Questions', VALUE_REQUIRED),
+        ];
+        return new \external_function_parameters($parameters);
+    }
+
+    /**
+     * Defines the response of update_questions_order.
+     * @return \external_single_structure
+     */
+    public static function update_questions_order_returns() {
+        $keys = [
+            'success' => new \external_value(PARAM_BOOL, 'Update question order', VALUE_REQUIRED)
+        ];
+        return new \external_single_structure($keys, 'confirmed');
+    }
+
+    /**
+     * Saves and updates the order of the questions.
+     * @param int $cmid
+     * @param string $itemorder
+     * @return @boolean
+     */
+    public static function update_questions_order($cmid, $itemorder) {
+
+        global $DB, $CFG;
+
+        require_once($CFG->dirroot . '/mod/feedback/lib.php');
+
+        $ans = false;
+
+        $cm = get_coursemodule_from_id('feedback', $cmid, 0, false, MUST_EXIST);
+        $feedback = $DB->get_record('feedback', array('id' => $cm->instance), '*', MUST_EXIST);
+        $itemlist = explode(',', trim($itemorder, ','));
+        if (count($itemlist) > 0) {
+            $ans = feedback_ajax_saveitemorder($itemlist, $feedback);
+        }
+        return ['success' => $ans];
+    }
+
 }
