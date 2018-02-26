@@ -141,4 +141,13 @@ $functions = array(
         'capabilities'  => 'mod/feedback:view',
         'services'      => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
     ),
+    'mod_feedback_update_questions_order' => array(
+        'classname'     => 'mod_feedback_external',
+        'methodname'    => 'update_questions_order',
+        'description'   => 'Updates the order of the feedback questions',
+        'type'          => 'write',
+        'capabilities'  => 'mod/feedback:edititems',
+        'ajax'          => true,
+        'loginrequired' => true
+    ),
 );
