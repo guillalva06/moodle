@@ -166,6 +166,11 @@ if ($returnto === 'profile') {
     $returnurl = new moodle_url('/user/preferences.php', array('userid' => $user->id));
 }
 
+// If user does not have a valid id then redirect to home page.
+if ($user->id == -1) {
+    $returnurl = new moodle_url('/index.php');
+}
+
 if ($userform->is_cancelled()) {
     redirect($returnurl);
 } else if ($usernew = $userform->get_data()) {
